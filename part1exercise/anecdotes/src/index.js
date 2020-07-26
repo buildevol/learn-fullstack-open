@@ -52,7 +52,7 @@ const App = (props) => {
   const handleRandomSelection = () => {
     setSelected(getRandomIntExclusive(0, anecdotes.length));
   };
-  const handleVote = () => {
+  const handleVotes = () => {
     const copy = [...anecdotes];
     copy[selected] = {
       anecdote: anecdotes[selected].anecdote,
@@ -64,7 +64,7 @@ const App = (props) => {
     <div>
       <p>{anecdotes[selected].anecdote}</p>
       <p>has {anecdotes[selected].vote} votes</p>
-      <Button handleClick={handleVote} text="vote" />
+      <Button handleClick={handleVotes} text="vote" />
       <Button handleClick={handleRandomSelection} text="next anecdote" />
     </div>
   );
