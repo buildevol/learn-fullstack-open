@@ -11,12 +11,16 @@ const Button = ({ handleClick, text }) => {
 };
 
 const DisplayStatistics = ({ good, neutral, bad }) => {
+  const all = good + neutral + bad;
   return (
     <>
       <h1>Statistics</h1>
       <p>good {good}</p>
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
+      <p>all {all} </p>
+      <p>{all === 0 ? 0 : (good - bad) / all}</p>
+      <p>positive {all === 0 ? 0 : (good / parseFloat(all)) * 100.0}%</p>
     </>
   );
 };
