@@ -60,12 +60,27 @@ const App = (props) => {
     };
     setAnecdotes(copy);
   };
+  const getAnecdoteWithMostVotes = () => {
+    let largestVoteCount = Number.NEGATIVE_INFINITY;
+    let anecdoteWithLargestVoteCount = {};
+    anecdotes.forEach((anecdote) => {
+      if (anecdote.vote > largestVoteCount) {
+        largestVoteCount = anecdote.vote;
+        anecdoteWithLargestVoteCount = anecdote;
+      }
+    });
+    return anecdoteWithLargestVoteCount;
+  };
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected].anecdote}</p>
       <p>has {anecdotes[selected].vote} votes</p>
       <Button handleClick={handleVotes} text="vote" />
       <Button handleClick={handleRandomSelection} text="next anecdote" />
+
+      <h1>Anecdote with most votes</h1>
+      <p>{getAnecdoteWithMostVotes().anecdote}</p>
     </div>
   );
 };
