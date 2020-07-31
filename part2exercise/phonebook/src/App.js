@@ -13,6 +13,13 @@ function App() {
     const personObject = {
       name: newName,
     };
+    const filteredPersons = persons.filter((person) => {
+      return person.name === newName;
+    });
+    if (filteredPersons.length > 0) {
+      alert(`${newName} is already added to phonebook`);
+      return;
+    }
     setPersons(persons.concat(personObject));
     setNewName("");
   };
