@@ -7,24 +7,30 @@ const Number = ({ person }) => {
 function App() {
   const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
   const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const personObject = {
       name: newName,
+      number: newNumber,
     };
     const filteredPersons = persons.filter((person) => {
       return person.name === newName;
     });
     if (filteredPersons.length > 0) {
       alert(`${newName} is already added to phonebook`);
-      return;
+    } else {
+      setPersons(persons.concat(personObject));
     }
-    setPersons(persons.concat(personObject));
     setNewName("");
+    setNewNumber("");
   };
   const handleNewName = (event) => {
     setNewName(event.target.value);
+  };
+  const handleNewNumber = (event) => {
+    setNewNumber(event.target.value);
   };
   return (
     <div>
@@ -32,6 +38,10 @@ function App() {
       <form onSubmit={handleSubmit}>
         <div>
           name: <input type="text" value={newName} onChange={handleNewName} />
+        </div>
+        <div>
+          number:{" "}
+          <input type="text" value={newNumber} onChange={handleNewNumber} />
         </div>
         <div>
           <button type="submit">Add</button>
