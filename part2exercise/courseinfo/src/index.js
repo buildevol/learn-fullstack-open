@@ -31,6 +31,7 @@ const Content = (props) => {
 };
 
 const Total = (props) => {
+  // Already coded with reduce method in 2.2 which is also part of 2.3 solution
   return (
     <>
       <p>
