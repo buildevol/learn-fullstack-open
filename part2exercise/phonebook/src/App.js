@@ -1,10 +1,52 @@
 import React, { useState } from "react";
 
-const Number = ({ person }) => {
+const Person = ({ person }) => {
   return (
     <p>
       {person.name} {person.number}
     </p>
+  );
+};
+
+const Filter = ({ handleFilter }) => {
+  return (
+    <div>
+      <label htmlFor="filterInput">The filter shown with </label>
+      <input type="text" id="filterInput" onChange={handleFilter} />
+    </div>
+  );
+};
+
+const PersonForm = ({
+  newName,
+  newNumber,
+  handleSubmit,
+  handleNewName,
+  handleNewNumber,
+}) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        name: <input type="text" value={newName} onChange={handleNewName} />
+      </div>
+      <div>
+        number:{" "}
+        <input type="text" value={newNumber} onChange={handleNewNumber} />
+      </div>
+      <div>
+        <button type="submit">Add</button>
+      </div>
+    </form>
+  );
+};
+
+const Persons = ({ personsToShow }) => {
+  return (
+    <div>
+      {personsToShow.map((person, index) => {
+        return <Person key={index} person={person} />;
+      })}
+    </div>
   );
 };
 
@@ -53,25 +95,17 @@ function App() {
   return (
     <div>
       <h2>Phonebook</h2>
-      <label htmlFor="filterInput">The filter shown with </label>
-      <input type="text" id="filterInput" onChange={handleFilter} />
+      <Filter handleFilter={handleFilter} />
       <h2>Add A New</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          name: <input type="text" value={newName} onChange={handleNewName} />
-        </div>
-        <div>
-          number:{" "}
-          <input type="text" value={newNumber} onChange={handleNewNumber} />
-        </div>
-        <div>
-          <button type="submit">Add</button>
-        </div>
-      </form>
+      <PersonForm
+        newName={newName}
+        newNumber={newNumber}
+        handleSubmit={handleSubmit}
+        handleNewName={handleNewName}
+        handleNewNumber={handleNewNumber}
+      />
       <h2>Numbers</h2>
-      {personsToShow.map((person, index) => {
-        return <Number key={index} person={person} />;
-      })}
+      <Persons personsToShow={personsToShow} />
     </div>
   );
 }
