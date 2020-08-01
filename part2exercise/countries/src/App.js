@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const weather_api_key = process.env.REACT_APP_WEATHER_API_KEY;
 const Country = ({ country }) => {
   const [showDetailStatus, setShowDetailStatus] = useState(false);
   const handleShowCountryDetails = () => {
@@ -29,7 +30,47 @@ const Language = ({ language }) => {
   return <li>{language.name}</li>;
 };
 
+const WeatherDetails = ({ country, weatherInformation }) => {
+  return (
+    <div>
+      <p>
+        <strong>temparture: </strong>
+        {`${weatherInformation.current.temperature} Celsius`}
+      </p>
+      <img
+        src={weatherInformation.current.weather_icons[0]}
+        alt={`${country.name}-weather-icon`}
+        height="100"
+        width="100"
+      />
+      <p>
+        <strong>wind: </strong> {weatherInformation.current.wind_speed * 0.62}{" "}
+        mph direction {weatherInformation.current.wind_dir}
+      </p>
+    </div>
+  );
+};
+
 const CountryDetails = ({ country }) => {
+  const [weatherInformation, setWeatherInformation] = useState({
+    current: {
+      temperature: "",
+      weather_icons: [""],
+      wind_speed: "",
+      wind_dir: "",
+    },
+  });
+  useEffect(() => {
+    axios
+      .get(
+        `http://api.weatherstack.com/current?access_key=${weather_api_key}&query=${country.name}&units=m`
+      )
+      .then((response) => {
+        const weather = response.data;
+        console.log(response.data);
+        setWeatherInformation(weather);
+      });
+  }, [country.name]);
   return (
     <div>
       <h1>{country.name}</h1>
@@ -47,6 +88,15 @@ const CountryDetails = ({ country }) => {
         height="100"
         width="100"
       />
+      <h2>Weather in {country.name}</h2>
+      {weatherInformation ? (
+        <WeatherDetails
+          country={country}
+          weatherInformation={weatherInformation}
+        />
+      ) : (
+        <p>No weather Information</p>
+      )}
     </div>
   );
 };
