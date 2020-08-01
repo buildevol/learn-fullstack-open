@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Note from "./components/Note";
+import axios from "axios";
 
 const App = (props) => {
-  const [notes, setNotes] = useState(props.notes);
+  const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("A new note");
   const [showAll, setShowAll] = useState(true);
+
+  const hook = () => {
+    axios.get("http://localhost:3001/notes").then((response) => {
+      setNotes(response.data);
+    });
+  };
+
+  useEffect(hook, []); // The second paramter is an empty array which means the effect is only run along the firt render of the component
 
   const addNote = (event) => {
     event.preventDefault();
