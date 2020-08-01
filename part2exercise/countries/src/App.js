@@ -2,7 +2,27 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Country = ({ country }) => {
-  return <p>{country.name}</p>;
+  const [showDetailStatus, setShowDetailStatus] = useState(false);
+  const handleShowCountryDetails = () => {
+    setShowDetailStatus(!showDetailStatus);
+  };
+  const showDetails = () => {
+    if (showDetailStatus) {
+      return <CountryDetails key={country.alpha3Code} country={country} />;
+    }
+  };
+  return (
+    <div>
+      <span>
+        {country.name}{" "}
+        <button onClick={handleShowCountryDetails}>
+          {showDetailStatus ? "Hide" : "Show"}
+        </button>
+      </span>
+
+      {showDetails()}
+    </div>
+  );
 };
 
 const Language = ({ language }) => {
@@ -61,7 +81,7 @@ function App() {
       return <p>Too many matches, specify another filter</p>;
     } else if (filteredCountries.length > 1) {
       return filteredCountries.map((country) => {
-        return <Country country={country} />;
+        return <Country key={country.alpha3Code} country={country} />;
       });
     } else if (filteredCountries.length === 1) {
       return <CountryDetails country={filteredCountries[0]} />;
