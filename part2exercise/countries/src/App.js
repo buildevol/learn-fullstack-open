@@ -65,6 +65,8 @@ function App() {
       });
     } else if (filteredCountries.length === 1) {
       return <CountryDetails country={filteredCountries[0]} />;
+    } else {
+      return <p>No matches found. Please try another search input</p>;
     }
   };
   return (
