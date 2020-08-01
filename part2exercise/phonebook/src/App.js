@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import personService from "./services/persons";
 
-const Person = ({ person }) => {
+const Person = ({ person, handleDelete }) => {
   return (
-    <p>
-      {person.name} {person.number}
-    </p>
+    <div>
+      {person.name} {person.number}{" "}
+      <button
+        onClick={() => {
+          handleDelete(person.id, person.name);
+        }}
+      >
+        delete
+      </button>
+    </div>
   );
 };
 
@@ -41,11 +48,13 @@ const PersonForm = ({
   );
 };
 
-const Persons = ({ personsToShow }) => {
+const Persons = ({ personsToShow, handleDelete }) => {
   return (
     <div>
       {personsToShow.map((person, index) => {
-        return <Person key={index} person={person} />;
+        return (
+          <Person key={index} person={person} handleDelete={handleDelete} />
+        );
       })}
     </div>
   );
@@ -88,9 +97,17 @@ function App() {
   const handleNewNumber = (event) => {
     setNewNumber(event.target.value);
   };
+  const handleDelete = (id, name) => {
+    if (window.confirm(`Delete ${name}`)) {
+      personService.deletePerson(id).then((response) => {
+        setPersons(persons.filter((person) => person.id !== id));
+      });
+    }
+  };
   const handleFilter = (event) => {
     setFilterInput(event.target.value);
   };
+
   const personsToShow = filterInput
     ? persons.filter((person) => {
         return person.name.toLowerCase().includes(filterInput.toLowerCase());
@@ -109,7 +126,7 @@ function App() {
         handleNewNumber={handleNewNumber}
       />
       <h2>Numbers</h2>
-      <Persons personsToShow={personsToShow} />
+      <Persons personsToShow={personsToShow} handleDelete={handleDelete} />
     </div>
   );
 }

@@ -11,7 +11,7 @@ const createPerson = (newObject) => {
 };
 
 const deletePerson = (id) => {
-  return axios.delete(id).then((response) => response.data);
+  return axios.delete(`${baseUrl}/${id}`); // response.data will return empty
 };
 
 export default {
