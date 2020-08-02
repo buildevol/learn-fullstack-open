@@ -1,12 +1,25 @@
 import React, { useState, useEffect } from "react";
 import personService from "./services/persons";
 
-const Notification = ({ message }) => {
-  return (
-    <div className="notification">
-      <p>{message}</p>
-    </div>
-  );
+const Notification = ({ message, errorMessageStatus }) => {
+  const notificationStyle = errorMessageStatus
+    ? {
+        padding: 10,
+        backgroundColor: "lightgrey",
+        color: "red",
+        border: "solid red 2px",
+        borderRadius: 8,
+        margin: 10,
+      }
+    : {
+        padding: 10,
+        backgroundColor: "lightgrey",
+        color: "green",
+        border: "solid green 2px",
+        borderRadius: 8,
+        margin: 10,
+      };
+  return <div style={notificationStyle}>{message}</div>;
 };
 
 const Person = ({ person, handleDelete }) => {
@@ -74,6 +87,7 @@ function App() {
   const [newNumber, setNewNumber] = useState("");
   const [filterInput, setFilterInput] = useState("");
   const [notificationMessage, setNotificationMessage] = useState("");
+  const [errorMessageStatus, setErrorMessageStatus] = useState(false);
 
   useEffect(() => {
     personService.getAll().then((persons) => {
@@ -108,6 +122,12 @@ function App() {
               })
             );
             showNotification(`You have updated ${updatedPerson.name}`);
+          })
+          .catch((error) => {
+            showNotification(
+              `Information of ${personObject.name} has already been removed from server`,
+              true
+            );
           });
       }
     } else {
@@ -136,8 +156,9 @@ function App() {
     setFilterInput(event.target.value);
   };
 
-  const showNotification = (message) => {
-    setNotificationMessage(message);
+  const showNotification = (message, errorMessageStatus = false) => {
+    setNotificationMessage(message, errorMessageStatus);
+    setErrorMessageStatus(errorMessageStatus);
     setTimeout(() => {
       setNotificationMessage("");
     }, 5000);
@@ -152,7 +173,10 @@ function App() {
     <div>
       <h2>Phonebook</h2>
       {notificationMessage ? (
-        <Notification message={notificationMessage} />
+        <Notification
+          message={notificationMessage}
+          errorMessageStatus={errorMessageStatus}
+        />
       ) : null}
       <Filter handleFilter={handleFilter} />
       <h2>Add A New</h2>
