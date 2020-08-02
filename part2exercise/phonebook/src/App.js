@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import personService from "./services/persons";
 
+const Notification = ({ message }) => {
+  return (
+    <div className="notification">
+      <p>{message}</p>
+    </div>
+  );
+};
+
 const Person = ({ person, handleDelete }) => {
   return (
     <div>
@@ -65,6 +73,7 @@ function App() {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filterInput, setFilterInput] = useState("");
+  const [notificationMessage, setNotificationMessage] = useState("");
 
   useEffect(() => {
     personService.getAll().then((persons) => {
@@ -98,11 +107,13 @@ function App() {
                   : updatedPerson; // we use the data returned from put request as the object contains the id for the updated person
               })
             );
+            showNotification(`You have updated ${updatedPerson.name}`);
           });
       }
     } else {
       personService.createPerson(personObject).then((newPerson) => {
         setPersons(persons.concat(newPerson));
+        showNotification(`Added ${newPerson.name}`);
       });
     }
     setNewName("");
@@ -125,6 +136,13 @@ function App() {
     setFilterInput(event.target.value);
   };
 
+  const showNotification = (message) => {
+    setNotificationMessage(message);
+    setTimeout(() => {
+      setNotificationMessage("");
+    }, 5000);
+  };
+
   const personsToShow = filterInput
     ? persons.filter((person) => {
         return person.name.toLowerCase().includes(filterInput.toLowerCase());
@@ -133,6 +151,9 @@ function App() {
   return (
     <div>
       <h2>Phonebook</h2>
+      {notificationMessage ? (
+        <Notification message={notificationMessage} />
+      ) : null}
       <Filter handleFilter={handleFilter} />
       <h2>Add A New</h2>
       <PersonForm
