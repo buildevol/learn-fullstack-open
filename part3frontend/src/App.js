@@ -28,12 +28,20 @@ const App = (props) => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("A new note");
   const [showAll, setShowAll] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("Some error happened");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const hook = () => {
-    noteService.getAll().then((initialNotes) => {
-      setNotes(initialNotes);
-    });
+    noteService
+      .getAll()
+      .then((initialNotes) => {
+        setNotes(initialNotes);
+      })
+      .catch((error) => {
+        setErrorMessage(`There is an error contracting the server`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
+      });
   };
 
   useEffect(hook, []); // The second paramter is an empty array which means the effect is only run along the first render of the component
