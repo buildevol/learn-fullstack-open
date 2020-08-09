@@ -1,0 +1,17 @@
+{
+  "name": "part3mongodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mongo.js",
+  "scripts": {
+    "start": "node mongo.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-dev": "nodemon mongo.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.9.28",
+    "nodemon": "^2.0.4"
+  }
+}
