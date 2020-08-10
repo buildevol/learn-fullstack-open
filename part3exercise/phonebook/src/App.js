@@ -124,17 +124,25 @@ function App() {
             showNotification(`You have updated ${updatedPerson.name}`);
           })
           .catch((error) => {
-            showNotification(
-              `Information of ${personObject.name} has already been removed from server`,
-              true
-            );
+            // showNotification(
+            //   `Information of ${personObject.name} has already been removed from server`,
+            //   true
+            // );
+            console.log(error.response.data.error);
+            showNotification(error.response.data.error, true);
           });
       }
     } else {
-      personService.createPerson(personObject).then((newPerson) => {
-        setPersons(persons.concat(newPerson));
-        showNotification(`Added ${newPerson.name}`);
-      });
+      personService
+        .createPerson(personObject)
+        .then((newPerson) => {
+          setPersons(persons.concat(newPerson));
+          showNotification(`Added ${newPerson.name}`);
+        })
+        .catch((error) => {
+          console.log(error.response.data.error);
+          showNotification(error.response.data.error, true);
+        });
     }
     setNewName("");
     setNewNumber("");
