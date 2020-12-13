@@ -26,12 +26,17 @@ store.dispatch({
   },
 });
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App store={store} />
-  </React.StrictMode>,
-  document.getElementById('root'),
-);
+const renderApp = () => {
+  ReactDOM.render(
+    <React.StrictMode>
+      <App store={store} />
+    </React.StrictMode>,
+    document.getElementById('root'),
+  );
+};
+
+renderApp();
+store.subscribe(renderApp);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
