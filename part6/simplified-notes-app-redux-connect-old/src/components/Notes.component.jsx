@@ -1,31 +1,40 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { toggleImportanceOf } from '../reducers/noteReducer';
 import Note from './Note.component';
 
-const Notes = () => {
-  // The useDispatch hook provides any React component access to the dispatch functon of the redux store. This allows all components to make changes to the state of the redux store.
-  const dispatch = useDispatch();
-  // The useSelector hook accepts function as parameter. The function either searches for or selects data from the redux-store. In this case, we use the whole state.
-  const notes = useSelector(({ filter, notes }) => {
-    if (filter === 'ALL') {
-      return notes;
-    }
-    return filter === 'IMPORTANT'
-      ? notes.filter((note) => note.important)
-      : notes.filter((note) => !note.important);
-  });
+const Notes = (props) => {
 
   return (
     <ul>
-      {notes.map((note) => (
+      {props.notes.map((note) => (
         <Note
           key={note.id}
           note={note}
-          handleClick={() => dispatch(toggleImportanceOf(note.id))}
+          handleClick={() => props.toggleImportanceOf(note.id)}
         />
       ))}
     </ul>
   );
 };
 
-export default Notes;
+// The mapStateToProps function is used for defining the props of the connected component based on the state of the redux store
+const mapStateToProps = (state) => {
+  if (state.filter === 'ALL') {
+    return {
+      notes: state.notes,
+    };
+  }
+  return {
+    notes:
+      state.filter === 'IMPORTANT'
+        ? state.notes.filter((note) => note.important)
+        : state.notes.filter((note) => !note.important),
+  };
+};
+
+const mapDispatchToProps = {
+  toggleImportanceOf,
+}
+
+const ConnectedNotes = connect(mapStateToProps, mapDispatchToProps)(Notes);
+export default ConnectedNotes;
