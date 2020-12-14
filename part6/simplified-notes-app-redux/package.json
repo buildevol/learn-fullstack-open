@@ -17,7 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "json-server -p 3002 --watch db.json"
   },
   "eslintConfig": {
     "extends": [
@@ -38,6 +39,7 @@
     ]
   },
   "devDependencies": {
-    "deep-freeze": "0.0.1"
+    "deep-freeze": "0.0.1",
+    "json-server": "^0.16.3"
   }
 }
