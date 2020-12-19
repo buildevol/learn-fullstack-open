@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
+import useCounter from './hooks/useCounter';
 
 const App = (props) => {
-  const [counter, setCounter] = useState(0);
+  const left = useCounter();
+  const right = useCounter();
 
   return (
     <div>
-      <div>{counter}</div>
-      <button onClick={() => setCounter(counter + 1)}>plus</button>
-      <button onClick={() => setCounter(counter - 1)}>minus</button>
-      <button onClick={() => setCounter(0)}>zero</button>
+      {left.value}
+      <button onClick={left.increase}>left</button>
+      <button onClick={right.increase}>right</button>
+      {right.value}
     </div>
   );
 };
