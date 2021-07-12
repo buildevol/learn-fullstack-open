@@ -1,5 +1,10 @@
 import assert from 'assert';
 
+interface argumentResults {
+  target: number;
+  inputs: Array<number>;
+}
+
 interface Result {
   periodLength: number;
   trainingDays: number;
@@ -9,6 +14,19 @@ interface Result {
   target: number;
   average: number;
 }
+
+const parseArguments = (args: Array<string>): argumentResults => {
+  if (args.length < 4) {
+    throw new Error('Too few arguments');
+  }
+  const inputArguments: Array<number> = args
+    .slice(3)
+    .map((argument: string) => Number(argument));
+  return {
+    target: Number(args[2]),
+    inputs: inputArguments,
+  };
+};
 
 const calculateExercises = (
   dailyExerciseHoursArr: Array<number>,
@@ -61,15 +79,23 @@ const calculateExercises = (
   };
 };
 
-const result: Result = calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2);
-console.log(result);
+// const result: Result = calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2);
+// console.log(result);
 
-assert.deepStrictEqual(result, {
-  periodLength: 7,
-  trainingDays: 5,
-  success: false,
-  rating: 2,
-  ratingDescription: 'not too bad but could be better',
-  target: 2,
-  average: 1.9285714285714286,
-});
+// assert.deepStrictEqual(result, {
+//   periodLength: 7,
+//   trainingDays: 5,
+//   success: false,
+//   rating: 2,
+//   ratingDescription: 'not too bad but could be better',
+//   target: 2,
+//   average: 1.9285714285714286,
+// });
+
+try {
+  const { target, inputs } = parseArguments(process.argv);
+
+  console.log(calculateExercises(inputs, target));
+} catch (error) {
+  console.log(error.message);
+}
