@@ -1,9 +1,9 @@
-interface argumentResults {
+interface argumentResults2 {
   value1: number;
   value2: number;
 }
 
-const parseArguments = (args: Array<string>): argumentResults => {
+const parseArguments2 = (args: Array<string>): argumentResults2 => {
   if (args.length > 4) {
     throw new Error('Too many arguments');
   } else if (args.length < 4) {
@@ -20,7 +20,7 @@ const calculateBmi = (height: number, weight: number): string => {
   const bmi: number = weight / Math.pow(height / 100, 2);
 
   if (bmi > 30) {
-    return 'Obese)';
+    return 'Obese';
   } else if (bmi >= 25) {
     return 'Overweight';
   } else if (bmi >= 18.5) {
@@ -32,9 +32,11 @@ const calculateBmi = (height: number, weight: number): string => {
 
 // console.log(calculateBmi(180, 74));
 try {
-  const { value1, value2 } = parseArguments(process.argv);
+  const { value1, value2 } = parseArguments2(process.argv);
 
   console.log(calculateBmi(value1, value2));
 } catch (error) {
   console.log(error.message);
 }
+
+export default calculateBmi;
