@@ -1,0 +1,7 @@
+// The tsconfig.json is sed to define how the TypeScript compiler should interpret the code, how strictly the compilter should work, which files to watch or ignore, etc.
+// Resource: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+    }
+}
