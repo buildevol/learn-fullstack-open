@@ -36,7 +36,7 @@ const calculateExercises = (
   let trainingDays: number = 0,
     success: boolean,
     rating: 1 | 2 | 3,
-    ratingDescription: string,
+    ratingDescription: string = "",
     average: number,
     total: number = 0;
   // The calculation
