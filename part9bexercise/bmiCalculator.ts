@@ -36,6 +36,7 @@ try {
 
   console.log(calculateBmi(value1, value2));
 } catch (error) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   console.log(error.message);
 }
 

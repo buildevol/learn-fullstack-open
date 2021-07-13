@@ -10,7 +10,7 @@ interface Result {
   trainingDays: number;
   success: boolean;
   rating: 1 | 2 | 3;
-  ratingDescription: String;
+  ratingDescription: string;
   target: number;
   average: number;
 }
@@ -32,13 +32,12 @@ const calculateExercises = (
   dailyExerciseHoursArr: Array<number>,
   target: number,
 ): Result => {
-  let periodLength = dailyExerciseHoursArr.length;
-  let trainingDays: number = 0,
+  const periodLength = dailyExerciseHoursArr.length;
+  let trainingDays = 0,
     success: boolean,
     rating: 1 | 2 | 3,
-    ratingDescription: string = '',
-    average: number,
-    total: number = 0;
+    ratingDescription = '',
+    total = 0;
   // The calculation
   for (let i = 0; i < dailyExerciseHoursArr.length; i++) {
     if (dailyExerciseHoursArr[i] === 0) {
@@ -48,7 +47,7 @@ const calculateExercises = (
     total += dailyExerciseHoursArr[i];
   }
 
-  average = total / periodLength;
+  const average = total / periodLength;
   if (average >= target) {
     success = true;
     rating = 3;
@@ -97,5 +96,6 @@ try {
 
   console.log(calculateExercises(inputs, target));
 } catch (error) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   console.log(error.message);
 }
