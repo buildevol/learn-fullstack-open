@@ -27,5 +27,6 @@ try {
   const { value1, value2 } = parseArguments(process.argv);
   multiplicator(value1, value2, `Multiplied ${value1} and ${value2}, the result is:`);
 } catch (e) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   console.log('Error, something bad happened, message: ', e.message);
 }

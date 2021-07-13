@@ -1,7 +1,7 @@
 type Operation = 'multiply' | 'add' | 'divide';
 type Result = number | string;
 
-const calculator = (a: number, b: number, op: Operation): Result => {
+export const calculator = (a: number, b: number, op: Operation): Result => {
   switch (op) {
     case 'multiply':
       return a * b;
@@ -18,6 +18,7 @@ const calculator = (a: number, b: number, op: Operation): Result => {
 try {
   console.log(calculator(1, 5, 'divide'));
 } catch (e) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   console.log('Something went wrong, error message: ', e.message);
 }
 
