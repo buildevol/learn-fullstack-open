@@ -14,3 +14,5 @@ export interface DiaryEntry {
 // The use of utility types Pick or Omit
 // https://www.typescriptlang.org/docs/handbook/utility-types.html
 export type NonSensitiveDiaryEntry = Omit<DiaryEntry, 'comment'>;
+
+export type NewDiaryEntry = Omit<DiaryEntry, 'id'>;
