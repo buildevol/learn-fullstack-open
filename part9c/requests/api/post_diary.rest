@@ -4,5 +4,6 @@ Content-Type: application/json
 {
     "date": "2021-07-18",
     "weather": "sunny",
-    "visibility": "good"
+    "visibility": "good",
+    "comment": "Hello World"
 }

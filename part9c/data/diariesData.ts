@@ -1,6 +1,7 @@
 import { DiaryEntry } from '../src/types';
+import toNewDiaryEntry from '../src/utils';
 
-const diaryEntries: Array<DiaryEntry> = [
+const data = [
   {
     id: 1,
     date: '2017-01-01',
@@ -30,5 +31,12 @@ const diaryEntries: Array<DiaryEntry> = [
     comment: 'I almost failed the landing but I survived',
   },
 ];
+
+const diaryEntries: Array<DiaryEntry> = data.map((obj) => {
+  // Note that since toNewDiaryEntry returns an object of the type NewDiaryEntry we need to assert it to be DiaryEntry with the as operator.
+  const object = toNewDiaryEntry(obj) as DiaryEntry;
+  object.id = obj.id;
+  return object;
+});
 
 export default diaryEntries;
