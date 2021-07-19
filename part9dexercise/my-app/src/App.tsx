@@ -31,13 +31,20 @@ function App() {
       description: "Confusing description",
       exerciseSubmissionLink: "https://fake-exercise-submit.made-up-url.dev",
       type: "submission"
+    },
+    {
+      name: "Backend development",
+      exerciseCount: 21,
+      description: "Typing the backend",
+      requirements: ["nodejs", "jest"],
+      type: "special"
     }
   ]
   return (
     <div>
       <Header name={courseName} />
-      <Content courseParts={courseParts as Array<CoursePart>} />
-      <Total courseParts={courseParts as Array<CoursePart>} />
+      <Content courseParts={courseParts} />
+      <Total courseParts={courseParts} />
     </div>
   );
 }
