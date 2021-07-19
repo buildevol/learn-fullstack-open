@@ -1,22 +1,25 @@
-export interface CoursePartBase {
+// new types
+interface CoursePartBase {
     name: string;
     exerciseCount: number;
+    type: string;
 }
 
-export interface CoursePartOne extends CoursePartBase {
-    name: "Fundamentals";
+interface CourseNormalPart extends CoursePartBase {
+    type: "normal";
     description: string;
 }
-
-export interface CoursePartTwo extends CoursePartBase {
-    name: "Using props to pass data";
+interface CourseProjectPart extends CoursePartBase {
+    type: "groupProject";
     groupProjectCount: number;
 }
 
-export interface CoursePartThree extends CoursePartBase {
-    name: "Deeper type usage";
+interface CourseSubmissionPart extends CoursePartBase {
+    type: "submission";
     description: string;
     exerciseSubmissionLink: string;
 }
 
-export type CoursePart = CoursePartOne | CoursePartTwo | CoursePartThree;
+type CoursePart = CourseNormalPart | CourseProjectPart | CourseSubmissionPart;
+
+export default CoursePart;

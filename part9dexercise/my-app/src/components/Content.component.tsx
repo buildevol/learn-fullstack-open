@@ -1,4 +1,4 @@
-import { CoursePart } from "../types";
+import CoursePart from "../types";
 import { assertNever } from "./utils";
 
 interface ContentProps {
@@ -9,13 +9,13 @@ const Content = (props: ContentProps) => {
     return (
         <>
             {props.courseParts.map((coursePart, index) => {
-                switch (coursePart.name) {
-                    case "Fundamentals":
-                        return <p key={index}>{coursePart.name} {coursePart.exerciseCount} {coursePart.description}</p>
-                    case "Using props to pass data":
-                        return <p key={index}>{coursePart.name} {coursePart.exerciseCount} {coursePart.groupProjectCount}</p>
-                    case "Deeper type usage":
-                        return <p key={index}>{coursePart.name} {coursePart.exerciseCount} {coursePart.description} {coursePart.exerciseSubmissionLink}</p>
+                switch (coursePart.type) {
+                    case "normal":
+                        return <p key={index}>{coursePart.name} {coursePart.exerciseCount}</p>
+                    case "groupProject":
+                        return <p key={index}>{coursePart.name} {coursePart.exerciseCount}</p>
+                    case "submission":
+                        return <p key={index}>{coursePart.name} {coursePart.exerciseCount}</p>
                     default:
                         return assertNever(coursePart);
                 }
