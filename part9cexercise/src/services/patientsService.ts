@@ -7,13 +7,14 @@ const getPatients = (): PatientsType[] => {
 };
 
 const getNonSensitivePatients = (): NonSensitivePatients[] => {
-  return patients.map(({ id, name, dateOfBirth, gender, occupation }) => {
+  return patients.map(({ id, name, dateOfBirth, gender, occupation, entries }) => {
     return {
       id,
       name,
       dateOfBirth,
       gender,
       occupation,
+      entries,
     };
   });
 };
@@ -28,8 +29,14 @@ const addPatient = (patient: NewPatient): PatientsType => {
   return newPatientEntry;
 };
 
+const getPatientById = (id: string): PatientsType | undefined => {
+  const patient = patients.find((current) => current.id === id);
+  return patient;
+};
+
 export default {
   getPatients,
   getNonSensitivePatients,
   addPatient,
+  getPatientById,
 };
