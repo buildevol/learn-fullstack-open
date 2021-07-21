@@ -1,4 +1,4 @@
-import { Gender, NewPatient } from './types';
+import { EntryWithoutId, Gender, NewPatient } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const toNewPatient = (object: any): NewPatient => {
@@ -8,7 +8,7 @@ const toNewPatient = (object: any): NewPatient => {
     ssn: parseSsn(object.ssn),
     gender: parseGender(object.gender),
     occupation: parseOccupation(object.occupation),
-    entries: [],
+    entries: parseEntries(object.entries),
   };
   return newPatientEntry;
 };
@@ -59,6 +59,25 @@ const parseOccupation = (occupation: unknown): string => {
     throw new Error('Incorrect or missing occupation');
   }
   return occupation;
+};
+
+const isEntryWithoutIdType = (param: any): param is EntryWithoutId => {
+  return (
+    param['type'] === 'OccupationalHealthcare' ||
+    param['type'] === 'Hospital' ||
+    param['type'] === 'HealthCheck'
+  );
+};
+
+const parseEntries = (entries: unknown): EntryWithoutId[] => {
+  if (
+    !entries ||
+    !Array.isArray(entries) ||
+    entries.map((entry) => isEntryWithoutIdType(entry)).includes(false)
+  ) {
+    throw new Error('Incorrect or missing entries');
+  }
+  return entries as EntryWithoutId[];
 };
 
 export default toNewPatient;
