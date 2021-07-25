@@ -29,4 +29,14 @@ patientsRouter.get('/:id', (req, res) => {
   }
 });
 
+patientsRouter.post('/:id/entries', (req, res) => {
+  const { id } = req.params;
+  const addedEntry = patientsService.addEntryToPatient(id, req.body);
+  if (addedEntry) {
+    res.send(addedEntry);
+  } else {
+    res.sendStatus(404);
+  }
+});
+
 export default patientsRouter;
