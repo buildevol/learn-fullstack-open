@@ -1,4 +1,4 @@
-import { EntryWithoutId, Gender, NewPatient } from './types';
+import { Gender, NewPatient, Entry, EntryWithoutId } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const toNewPatient = (object: any): NewPatient => {
@@ -8,10 +8,26 @@ const toNewPatient = (object: any): NewPatient => {
     ssn: parseSsn(object.ssn),
     gender: parseGender(object.gender),
     occupation: parseOccupation(object.occupation),
-    entries: parseEntries(object.entries),
   };
   return newPatientEntry;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const toNewPatientEntry = (object: any): EntryWithoutId => {
+  const entryType: unknown = object.type;
+  if (!entryType || !isString(entryType) || !['HealthCheck', 'Hospital', 'OccupationalHealthcare'].includes(entryType)) {
+    throw new Error('Incorrect or missing entry type');
+  }
+  let newEntry: EntryWithoutId;
+  switch (object.type) {
+    case 'HealthCheck':
+      break;
+    case 'Hospital':
+      break;
+    case 'OccupationalHealthcare':
+      break;
+  }
+}
 
 const isString = (text: unknown): text is string => {
   return typeof text === 'string' || text instanceof String;
@@ -61,23 +77,23 @@ const parseOccupation = (occupation: unknown): string => {
   return occupation;
 };
 
-const isEntryWithoutIdType = (param: any): param is EntryWithoutId => {
-  return (
-    param['type'] === 'OccupationalHealthcare' ||
-    param['type'] === 'Hospital' ||
-    param['type'] === 'HealthCheck'
-  );
-};
+// const isEntryWithoutIdType = (param: any): param is EntryWithoutId => {
+//   return (
+//     param['type'] === 'OccupationalHealthcare' ||
+//     param['type'] === 'Hospital' ||
+//     param['type'] === 'HealthCheck'
+//   );
+// };
 
-const parseEntries = (entries: unknown): EntryWithoutId[] => {
-  if (
-    !entries ||
-    !Array.isArray(entries) ||
-    entries.map((entry) => isEntryWithoutIdType(entry)).includes(false)
-  ) {
-    throw new Error('Incorrect or missing entries');
-  }
-  return entries as EntryWithoutId[];
-};
+// const parseEntries = (entries: unknown): EntryWithoutId[] => {
+//   if (
+//     !entries ||
+//     !Array.isArray(entries) ||
+//     entries.map((entry) => isEntryWithoutIdType(entry)).includes(false)
+//   ) {
+//     throw new Error('Incorrect or missing entries');
+//   }
+//   return entries as EntryWithoutId[];
+// };
 
 export default toNewPatient;
